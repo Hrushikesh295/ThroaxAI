@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thorax AI - Chest X-ray Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/medichat.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <img src="/static/images/ThoraxAI.png" alt="Thorax AI" class="logo-img">
+            <span>Thorax AI</span> <!-- Optional - remove if you want just the logo -->
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/disease">Diseases</a>
+            <a href="/medichat">MediChat Scan</a>
+        </div>
+    </nav>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            Chest X-ray Analysis & Medical Assistant
+        </div>
+        <div class="chat-box" id="chat-box">
+            <div class="bot-message">
+                <p>Welcome to Thorax AI! I can help you:</p>
+                <ul>
+                    <li>Analyze chest X-rays for lung conditions</li>
+                    <li>Explain medical conditions in detail</li>
+                    <li>Provide information about symptoms and treatments</li>
+                    <li>Explain how the AI model works</li>
+                </ul>
+                <p>Upload a chest X-ray or ask any medical question.</p>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="file" id="file-input" class="file-upload" accept="image/*">
+            <button id="upload-btn">Upload X-ray</button>
+            <input type="text" id="chat-input" placeholder="Ask about any medical condition...">
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+
+     <!-- Footer -->
+     <footer>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact Us</a>
+            <a href="#">Research</a>
+        </div>
+        <p class="copyright">© 2023 LungGuard AI. All rights reserved.</p>
+    </footer>
+
+    <script src="/static/js/medichat.js"></script>
+</body>
+</html>

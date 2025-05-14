@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LungGuard AI - Advanced Chest X-Ray Diagnosis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <img src="/static/images/ThoraxAI.png" alt="Thorax AI" class="logo-img">
+            <span>Thorax AI</span> <!-- Optional - remove if you want just the logo -->
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/disease">Diseases</a>
+            <a href="/medichat">MediChat Scan</a>
+        </div>
+    </nav>
+
+    <!-- Hero Slideshow -->
+    <section class="hero-slideshow">
+        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+            <div class="slide-content">
+                <h1>Advanced AI for Chest Disease Detection</h1>
+                <p>Our deep learning model analyzes chest X-rays with 98.5% accuracy to identify potential health issues.</p>
+                <!-- <a href="/medichat" class="cta-button">Try Free Scan</a> -->
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1581595219315-a187dd40c322?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+            <div class="slide-content">
+                <h1>Instant Results with Expert Insights</h1>
+                <p>Get immediate analysis combined with our AI chatbot that explains your results in simple terms.</p>
+                <!-- <a href="/medichat" class="cta-button">Learn How It Works</a> -->
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+            <div class="slide-content">
+                <h1>Early Detection Saves Lives</h1>
+                <p>Identify potential chest diseases before symptoms become severe with our predictive AI technology.</p>
+                <!-- <a href="#diseases" class="cta-button">View Detectable Diseases</a> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Disease Showcase -->
+    <section class="disease-showcase" id="diseases">
+        <div class="section-header">
+            <h2 class="section-title">Detectable <span>Chest Diseases</span></h2>
+            <button class="know-more-btn" id="knowMoreBtn">
+                <span>Know More</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+        
+        <div class="disease-grid">
+            <!-- First 3 diseases (always visible) -->
+            <div class="disease-card">
+                <div class="disease-image" style="background-image: url('https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="disease-info">
+                    <h3>Pneumonia</h3>
+                    <p>An infection that inflames the air sacs in one or both lungs, which may fill with fluid.</p>
+                    <!-- <a href="#" class="learn-more">Learn more <i class="fas fa-arrow-right"></i></a> -->
+                </div>
+            </div>
+            
+            <div class="disease-card">
+                <div class="disease-image" style="background-image: url('https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="disease-info">
+                    <h3>Tuberculosis</h3>
+                    <p>A potentially serious infectious bacterial disease that mainly affects the lungs.</p>
+                    <!-- <a href="#" class="learn-more">Learn more <i class="fas fa-arrow-right"></i></a> -->
+                </div>
+            </div>
+            
+            <div class="disease-card">
+                <div class="disease-image" style="background-image: url('https://images.unsplash.com/photo-1551601651-bc60f254d532?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="disease-info">
+                    <h3>COVID-19</h3>
+                    <p>A contagious respiratory illness caused by SARS-CoV-2 that can cause severe lung damage.</p>
+                    <!-- <a href="#" class="learn-more">Learn more <i class="fas fa-arrow-right"></i></a> -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Additional diseases (hidden by default) -->
+        <div class="hidden-diseases" id="hiddenDiseases">
+            <div class="disease-card">
+                <div class="disease-image" style="background-image: url('https://images.unsplash.com/photo-1504439468489-c8920d796a29?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="disease-info">
+                    <h3>Normal</h3>
+                    <p>A contagious respiratory illness caused by SARS-CoV-2 that can cause severe lung damage.</p>
+                    <!-- <a href="#" class="learn-more">Learn more <i class="fas fa-arrow-right"></i></a> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact Us</a>
+            <a href="#">Research</a>
+        </div>
+        <p class="copyright">© 2023 LungGuard AI. All rights reserved.</p>
+    </footer>
+
+    <script src="/static/js/scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+torch
+torchvision
+Pillow
+flask
+werkzeug
+python-dotenv
+google-generativeai
+opencv-python
+numpy
+matplotlib

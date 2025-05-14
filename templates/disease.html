@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LungGuard AI - Chest X-Ray Diseases</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        :root {
+            --navy: #0a192f;
+            --light-navy: #172a45;
+            --lightest-navy: #303C55;
+            --slate: #8892b0;
+            --light-slate: #a8b2d1;
+            --lightest-slate: #ccd6f6;
+            --white: #e6f1ff;
+            --teal: #64ffda;
+            --green: #64ffda;
+            --red: #ff5555;
+            --yellow: #f1fa8c;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--navy);
+            color: var(--light-slate);
+            line-height: 1.6;
+        }
+
+        /* Navigation Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 10%;
+    background-color: var(--navy);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    color: var(--teal);
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.logo-img {
+    height: 60px; /* Fixed pixel size */
+    width: auto; /* Maintains aspect ratio */
+    max-height: 100%; /* Ensures it never exceeds container */
+    display: block; /* Removes extra space under image */
+}
+
+/* Optional: If you want to keep the text alongside the logo */
+.logo span {
+    font-size: 1.5rem; /* Reduced from 1.8rem for better balance */
+    margin-left: 10px; /* Space between logo and text */
+}
+
+.logo i {
+    font-size: 1.5rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: var(--light-slate);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+.nav-links a:hover {
+    color: var(--teal);
+    background-color: rgba(100, 255, 218, 0.1);
+}
+        /* Disease Page Specific Styles */
+        .disease-container {
+            max-width: 1200px;
+            margin: 6rem auto 3rem;
+            padding: 0 2rem;
+        }
+
+        .thorax-definition {
+            background: var(--light-navy);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            border-left: 3px solid var(--teal);
+        }
+
+        .thorax-definition h2 {
+            color: var(--teal);
+            margin-bottom: 1rem;
+        }
+
+        .disease-category {
+            margin-bottom: 3rem;
+        }
+
+        .disease-category h2 {
+            color: var(--teal);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--lightest-navy);
+        }
+
+        .disease-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .disease-item {
+            background: var(--light-navy);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--lightest-navy);
+        }
+
+        .disease-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: var(--teal);
+        }
+
+        .disease-item h3 {
+            color: var(--white);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .disease-item p {
+            color: var(--slate);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--white);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--teal);
+        }
+
+        /* Explanation Section Styles */
+        .explanation-section {
+            background: var(--light-navy);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-left: 3px solid var(--teal);
+        }
+
+        .explanation-toggle {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation-toggle button {
+            background: transparent;
+            border: 1px solid var(--teal);
+            color: var(--teal);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .explanation-toggle button.active {
+            background: var(--teal);
+            color: var(--navy);
+            font-weight: 500;
+        }
+
+        .explanation-image {
+            max-height: 500px;
+            width: 100%;
+            object-fit: contain;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--lightest-navy);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--light-navy);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--lightest-slate);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--teal);
+        }
+
+        .copyright {
+            color: var(--slate);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .disease-list {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                gap: 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .disease-container {
+                margin: 5rem auto 2rem;
+                padding: 0 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .disease-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .thorax-definition, .disease-item {
+                padding: 1.2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .nav-links {
+                margin-top: 1rem;
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <img src="/static/images/ThoraxAI.png" alt="Thorax AI" class="logo-img">
+            <span>Thorax AI</span> <!-- Optional - remove if you want just the logo -->
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/disease">Diseases</a>
+            <a href="/medichat">MediChat Scan</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="disease-container">
+        <h1 class="section-title">Chest X-Ray Pathology Detection</h1>
+        
+        <div class="thorax-definition">
+            <h2>What is ThoraxAI?</h2>
+            <p>ThoraxAI is an advanced artificial intelligence system developed by LungGuard AI that specializes in analyzing thoracic (chest) radiographs. Our deep learning model has been trained on thousands of annotated chest X-rays to detect various pulmonary and thoracic abnormalities with high accuracy. ThoraxAI assists radiologists by providing rapid preliminary assessments, helping to identify potential pathologies that might require urgent attention.</p>
+        </div>
+        
+        <h2 class="section-title">Chest X-Ray Abnormalities</h2>
+        
+        <!-- Lung Diseases Section -->
+        <div class="disease-category">
+            <h2>1. Lung Diseases</h2>
+            <div class="disease-list">
+                <div class="disease-item">
+                    <h3>Pneumonia</h3>
+                    <p>Infection causing lung inflammation and consolidation, appearing as areas of increased opacity in the lungs. Our AI detects patterns like lobar consolidation, bronchopneumonia, and interstitial patterns.</p>
+                </div>
+                <div class="disease-item">
+                    <h3>Tuberculosis (TB)</h3>
+                    <p>Bacterial infection causing cavities or nodules in the lungs, typically in the upper lobes. The model identifies apical opacities, cavitary lesions, and miliary patterns characteristic of TB.</p>
+                </div>
+                <div class="disease-item">
+                    <h3>Chronic Obstructive Pulmonary Disease (COPD)</h3>
+                    <p>Includes emphysema and chronic bronchitis, leading to lung hyperinflation and flattened diaphragms. The AI measures lung volumes and detects bullae formation.</p>
+                </div>
+                <div class="disease-item">
+                    <h3>Lung Cancer</h3>
+                    <p>Abnormal growth or mass in lung tissue, often appearing as solitary pulmonary nodules. The system evaluates nodule characteristics like spiculation and growth rate.</p>
+                </div>
+                <div class="disease-item">
+                    <h3>Pulmonary Edema</h3>
+                    <p>Fluid accumulation in the lungs, often due to heart failure, showing bilateral perihilar opacities. The AI detects Kerley B lines and bat-wing patterns.</p>
+                </div>
+                <div class="disease-item">
+                    <h3>Pneumothorax</h3>
+                    <p>Collapsed lung due to air leakage in the pleural space, visible as a visceral pleural line. The model is particularly sensitive to small apical pneumothoraces.</p>
+                </div>
+                <div class="disease-item">
+                    <h3>Pleural Effusion</h3>
+                    <p>Excess fluid in the pleural cavity surrounding the lungs, causing blunting of costophrenic angles. The system quantifies effusion size and evaluates for loculations.</p>
+                </div>
+                <div class="disease-item">
+                    <h3>Interstitial Lung Disease (ILD)</h3>
+                    <p>Scarring or fibrosis affecting lung tissue, appearing as reticular or nodular patterns. The AI classifies patterns like honeycombing and ground-glass opacities.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Heart-Related Conditions Section -->
+        <div class="disease-category">
+            <h2>2. Heart-Related Conditions</h2>
+            <div class="disease-list">
+                <div class="disease-item">
+                    <h3>Cardiomegaly</h3>
+                    <p>Enlarged heart, indicating conditions like heart failure, with a cardiothoracic ratio >50%. The AI automatically calculates cardiac silhouette measurements.</p>
+                </div>
+                <div class="disease-item">
+                    <h3>Congestive Heart Failure (CHF)</h3>
+                    <p>Fluid buildup in the lungs due to poor heart function, often with cephalization of pulmonary vessels. The system evaluates vascular redistribution and edema patterns.</p>
+                </div>
+                <div class="disease-item">
+                    <h3>Aortic Aneurysm</h3>
+                    <p>Abnormal widening of the aorta visible on X-ray as mediastinal widening or abnormal contours. The AI measures aortic diameter and tracks changes over time.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bone and Rib Abnormalities Section -->
+        <div class="disease-category">
+            <h2>3. Bone and Rib Abnormalities</h2>
+            <div class="disease-list">
+                <div class="disease-item">
+                    <h3>Rib Fractures</h3>
+                    <p>Broken ribs due to trauma, visible as discontinuities in the bony cortex. The model highlights fracture sites and counts affected ribs.</p>
+                </div>
+                <div class="disease-item">
+                    <h3>Scoliosis</h3>
+                    <p>Abnormal curvature of the spine affecting the chest cavity anatomy. The AI calculates Cobb angles for severity assessment.</p>
+                </div>
+                <div class="disease-item">
+                    <h3>Osteoporosis</h3>
+                    <p>Weak bones, visible through rib thinning and decreased bone density. The system evaluates cortical thinning and trabecular patterns.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Infections and Inflammatory Conditions Section -->
+        <div class="disease-category">
+            <h2>4. Infections and Inflammatory Conditions</h2>
+            <div class="disease-list">
+                <div class="disease-item">
+                    <h3>Bronchitis</h3>
+                    <p>Inflammation of the bronchial tubes, sometimes visible as thickened airway walls. The AI detects peribronchial cuffing and hyperinflation.</p>
+                </div>
+                <div class="disease-item">
+                    <h3>Sarcoidosis</h3>
+                    <p>Inflammatory disease causing enlarged lymph nodes and lung nodules in characteristic patterns. The model identifies hilar lymphadenopathy and perilymphatic nodules.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Foreign Objects and Medical Devices Section -->
+        <div class="disease-category">
+            <h2>5. Foreign Objects and Medical Devices</h2>
+            <div class="disease-list">
+                <div class="disease-item">
+                    <h3>Aspiration (Foreign Body)</h3>
+                    <p>Inhalation of objects into the lungs, common in children, often causing atelectasis. The system detects radiopaque foreign bodies and secondary changes.</p>
+                </div>
+                <div class="disease-item">
+                    <h3>Pacemaker or Medical Implants</h3>
+                    <p>Devices inserted for heart conditions, visible as metallic objects with leads in the chest. The AI verifies proper positioning and identifies lead fractures.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Explanation Section -->
+        <div class="explanation-section" id="explanation-section" style="display:none;">
+            <h2><i class="fas fa-brain"></i> AI Decision Explanation</h2>
+            <p class="mb-4">See how our AI model analyzed the X-ray to make its diagnosis:</p>
+            
+            <div class="explanation-toggle">
+                <button class="active" onclick="showExplanation('lime')">
+                    <i class="fas fa-map-marked-alt"></i> LIME Explanation
+                </button>
+                <button onclick="showExplanation('gradcam')">
+                    <i class="fas fa-fire"></i> Grad-CAM Heatmap
+                </button>
+            </div>
+            
+            <div id="lime-explanation">
+                <img id="lime-img" class="explanation-image">
+                <p class="text-muted">Areas highlighted in red/blue show the most influential regions for the diagnosis according to LIME (Local Interpretable Model-agnostic Explanations).</p>
+            </div>
+            
+            <div id="gradcam-explanation" style="display:none;">
+                <img id="gradcam-img" class="explanation-image">
+                <p class="text-muted">The heatmap shows where the neural network focused its attention using Grad-CAM (Gradient-weighted Class Activation Mapping).</p>
+            </div>
+            
+            <div class="alert alert-info mt-3" id="text-explanation"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact Us</a>
+            <a href="#">Research</a>
+        </div>
+        <p class="copyright">© 2023 LungGuard AI. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Explanation toggle functionality
+        function showExplanation(method) {
+            document.getElementById('lime-explanation').style.display = method === 'lime' ? 'block' : 'none';
+            document.getElementById('gradcam-explanation').style.display = method === 'gradcam' ? 'block' : 'none';
+            
+            // Update active buttons
+            const buttons = document.querySelectorAll('.explanation-toggle button');
+            buttons.forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.toLowerCase().includes(method));
+            });
+        }
+
+        // Mobile menu toggle (if needed)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Any initialization code can go here
+        });
+    </script>
+</body>
+</html>
