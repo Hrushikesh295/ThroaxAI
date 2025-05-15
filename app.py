@@ -237,16 +237,18 @@ def predict_image(image_path: str) -> Dict[str, Any]:
         return {'error': f"Could not process image: {str(e)}", 'success': False}
 
 # Medical Chatbot
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or "AIzaSyDPK3d4s2q-WnhUj4Hc2EijNKM7p6IJOpQ"
-chatbot_model = None
-
-try:
-    genai.configure(api_key=GEMINI_API_KEY)
-    chatbot_model = genai.GenerativeModel('gemini-1.5-pro')
-    logger.info("Gemini model initialized successfully")
-except Exception as e:
-    logger.error(f"Failed to initialize Gemini: {str(e)}")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+if not GEMINI_API_KEY:
+    logger.error("GEMINI_API_KEY not found in environment variables")
     chatbot_model = None
+else:
+    try:
+        genai.configure(api_key=GEMINI_API_KEY)
+        chatbot_model = genai.GenerativeModel('gemini-1.5-pro')
+        logger.info("Gemini model initialized successfully")
+    except Exception as e:
+        logger.error(f"Failed to initialize Gemini: {str(e)}")
+        chatbot_model = None
 
 def generate_chat_response(user_input: str, diagnosis_data: Optional[Dict] = None) -> Dict[str, Any]:
     user_input_lower = user_input.lower()
